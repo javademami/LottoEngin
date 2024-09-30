@@ -7,15 +7,19 @@ const LotteryResults = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // استفاده از متغیر محیطی برای تعیین آدرس API
+  const API_URL = process.env.REACT_APP_API_URL || '/api';
+
   const fetchResults = async () => {
     setLoading(true);
     setError('');
     try {
-      const { data } = await axios.get('http://localhost:3000/lotto-results');
+      const { data } = await axios.get(`${API_URL}/lotto-results`);
       setResults(data.results);
       setDate(data.date);
     } catch (err) {
-      setError('خطا در دریافت اطلاعات');
+      console.error('Error fetching results:', err.response || err);
+      setError('خطا در دریافت اطلاعات: ' + (err.response?.data?.message || err.message));
     } finally {
       setLoading(false);
     }

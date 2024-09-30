@@ -4,30 +4,15 @@ const cheerio = require('cheerio');
 const cors = require('cors');
 
 const app = express();
-const PORT = 3000;
 
 app.use(cors());
 
-// تابع برای محاسبه تاریخ آخرین قرعه‌کشی (چهارشنبه یا شنبه گذشته)
+// تابع برای محاسبه تاریخ آخرین قرعه‌کشی
 function getLastDrawDate() {
-  const today = new Date();
-  const dayOfWeek = today.getDay();
-  let daysAgo;
-
-  if (dayOfWeek === 0) { // یکشنبه
-    daysAgo = 1;
-  } else if (dayOfWeek <= 3) { // دوشنبه تا چهارشنبه
-    daysAgo = dayOfWeek + 3;
-  } else if (dayOfWeek <= 6) { // پنج‌شنبه تا شنبه
-    daysAgo = dayOfWeek - 3;
-  }
-
-  const lastDrawDate = new Date(today);
-  lastDrawDate.setDate(today.getDate() - daysAgo);
-  return lastDrawDate.toISOString().split('T')[0]; // فرمت YYYY-MM-DD
+  // ... (کد قبلی)
 }
 
-app.get('/lotto-results', async (req, res) => {
+app.get('/api/lotto-results', async (req, res) => {
   try {
     const { data } = await axios.get('https://viking-lotto.net/en/sweden-lotto');
     const $ = cheerio.load(data);
@@ -65,10 +50,16 @@ app.get('/lotto-results', async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).send('خطا در دریافت اطلاعات');
+    res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`سرور در حال اجرا در پورت ${PORT}`);
-});
+// برای اجرا در محیط لوکال
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`سرور در حال اجرا در پورت ${PORT}`);
+  });
+}
+
+module.exports = app;
