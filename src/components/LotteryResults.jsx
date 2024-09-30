@@ -13,7 +13,7 @@ const LotteryResults = () => {
     setLoading(true);
     setError('');
     try {
-      const { data } = await axios.get(`${API_URL}/api/lotto-results`);
+      const { data } = await axios.get(`${API_URL}/lotto-results`);
       setResults(data.results);
       setDate(data.date);
     } catch (err) {

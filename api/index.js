@@ -26,7 +26,7 @@ function getLastDrawDate() {
   return lastDrawDate.toISOString().split('T')[0];
 }
 
-app.get('/api/lotto-results', async (req, res) => {
+app.get('/lotto-results', async (req, res) => {
   try {
     const { data } = await axios.get('https://viking-lotto.net/en/sweden-lotto');
     const $ = cheerio.load(data);
@@ -61,6 +61,10 @@ app.get('/api/lotto-results', async (req, res) => {
     console.error(error);
     res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
   }
+});
+
+app.get('/', (req, res) => {
+  res.send('Lottery API is running');
 });
 
 module.exports = app;
