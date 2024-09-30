@@ -12,6 +12,10 @@ function getLastDrawDate() {
   // ... (کد قبلی)
 }
 
+app.get('/', (req, res) => {
+  res.send('Lottery API is running');
+});
+
 app.get('/api/lotto-results', async (req, res) => {
   try {
     const { data } = await axios.get('https://viking-lotto.net/en/sweden-lotto');
