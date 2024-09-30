@@ -12,10 +12,6 @@ function getLastDrawDate() {
   // ... (کد قبلی)
 }
 
-app.get('/', (req, res) => {
-  res.send('Lottery API is running');
-});
-
 app.get('/api/lotto-results', async (req, res) => {
   try {
     const { data } = await axios.get('https://viking-lotto.net/en/sweden-lotto');
@@ -58,12 +54,6 @@ app.get('/api/lotto-results', async (req, res) => {
   }
 });
 
-// برای اجرا در محیط لوکال
-if (process.env.NODE_ENV !== 'production') {
-  const PORT = process.env.PORT || 3000;
-  app.listen(PORT, () => {
-    console.log(`سرور در حال اجرا در پورت ${PORT}`);
-  });
-}
+// حذف کد مربوط به اجرای سرور در محیط لوکال
 
 module.exports = app;
