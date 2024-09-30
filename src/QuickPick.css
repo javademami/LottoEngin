@@ -1,0 +1,54 @@
+.number-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .number-circle {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin: 1px;
+    background-color: rgb(184, 11, 112); /* تغییر رنگ زمینه به سفید */
+    color: white; /* تغییر رنگ متن به مشکی */
+    border: 2px solid black;
+    animation: bounce 0.5s ease forwards;
+  }
+  /* ... سایر استایل‌های موجود ... */
+
+  .delete-button {
+    width: 32px;
+    height: 32px;
+    background-color: #dc2626;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .delete-button:hover {
+    background-color: #b91c1c;
+  }
+  
+  .delete-button svg {
+    width: 10px;
+    height: 10px;
+    color: white;
+  }
+  
+  @keyframes bounce {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  
