@@ -1,6 +1,6 @@
 # LottoEngine
 
-![Swedish Lotto App Screenshot](https://github.com/javademami/lottoengine/blob/master/public/LottoEngine.jpg)
+![Swedish Lotto App Screenshot](https://github.com/javademami/LottoEngin/blob/main/public/LottoEngine.jpg)
 
 ## Overview
 The LottoEngine is a comprehensive web application designed to provide users with information and tools related to the Swedish Lotto (Svenska Spel Lotto). This app offers various features to enhance the lotto experience for both casual players and enthusiasts.
@@ -30,6 +30,8 @@ The LottoEngine is a comprehensive web application designed to provide users wit
 ### 6. About Swedish Lotto
 - Offers detailed information about the Swedish Lotto game.
 - Explains rules, draw schedules, and prize structures.
+
+  Demo: https://lotto-engin-66g45dpg0-javademamis-projects.vercel.app
 
 ## Technology Stack
 - React.js for the frontend user interface
