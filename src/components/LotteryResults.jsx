@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
 const LotteryResults = () => {
@@ -7,27 +7,32 @@ const LotteryResults = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // استفاده از متغیر محیطی برای تعیین آدرس API
-  const API_URL = process.env.REACT_APP_API_URL || '/api';
+  const API_URL = process.env.REACT_APP_API_URL || '';
 
-  const fetchResults = async () => {
+  const fetchResults = useCallback(async () => {
     setLoading(true);
     setError('');
     try {
-      const { data } = await axios.get(`${API_URL}/lotto-results`);
+      const { data } = await axios.get(`${API_URL}/api/lotto-results`);
       setResults(data.results);
       setDate(data.date);
     } catch (err) {
-      console.error('Error fetching results:', err.response || err);
-      setError('خطا در دریافت اطلاعات: ' + (err.response?.data?.message || err.message));
+      console.error('Error fetching results:', err);
+      if (err.response) {
+        setError(`خطا در دریافت اطلاعات: ${err.response.status} - ${err.response.data.error || err.response.statusText}`);
+      } else if (err.request) {
+        setError('خطا در ارتباط با سرور. لطفاً اتصال اینترنت خود را بررسی کنید.');
+      } else {
+        setError('خطای غیرمنتظره: ' + err.message);
+      }
     } finally {
       setLoading(false);
     }
-  };
+  }, [API_URL]);
 
   useEffect(() => {
     fetchResults();
-  }, []);
+  }, [fetchResults]);
 
   const renderNumbers = (numbers, extraNumbers, isJoker = false) => {
     return (

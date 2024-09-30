@@ -7,9 +7,23 @@ const app = express();
 
 app.use(cors());
 
-// تابع برای محاسبه تاریخ آخرین قرعه‌کشی
 function getLastDrawDate() {
-  // ... (کد قبلی)
+  const today = new Date();
+  const dayOfWeek = today.getDay();
+  let daysToSubtract;
+
+  if (dayOfWeek === 0 || dayOfWeek === 1 || dayOfWeek === 2) {
+    daysToSubtract = dayOfWeek + 1;
+  } else if (dayOfWeek === 3) {
+    daysToSubtract = 0;
+  } else {
+    daysToSubtract = dayOfWeek - 3;
+  }
+
+  const lastDrawDate = new Date(today);
+  lastDrawDate.setDate(today.getDate() - daysToSubtract);
+
+  return lastDrawDate.toISOString().split('T')[0];
 }
 
 app.get('/api/lotto-results', async (req, res) => {
@@ -17,21 +31,16 @@ app.get('/api/lotto-results', async (req, res) => {
     const { data } = await axios.get('https://viking-lotto.net/en/sweden-lotto');
     const $ = cheerio.load(data);
 
-    // استفاده از تابع getLastDrawDate برای محاسبه تاریخ آخرین قرعه‌کشی
     const date = getLastDrawDate();
 
-    // استخراج همه اعداد لوتو
     const allLottoNumbers = $('div:contains("Sweden Lotto")').next().find('li.ball, li.tilläggsnummer').map((i, el) => $(el).text().trim()).get();
 
-    // استخراج اعداد Lotto 1 (اولین 11 عدد)
     const lotto1Numbers = allLottoNumbers.slice(0, 7);
     const lotto1Extra = allLottoNumbers.slice(7, 11);
 
-    // استخراج اعداد Lotto 2 (دومین 11 عدد)
     const lotto2Numbers = allLottoNumbers.slice(11, 18);
     const lotto2Extra = allLottoNumbers.slice(18, 22);
 
-    // استخراج اعداد Joker
     const jokerNumbers = $('h2:contains("Joker")').next().find('ul.balls li').map((i, el) => $(el).text().trim()).get();
 
     res.json({
@@ -53,7 +62,5 @@ app.get('/api/lotto-results', async (req, res) => {
     res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
   }
 });
-
-// حذف کد مربوط به اجرای سرور در محیط لوکال
 
 module.exports = app;
