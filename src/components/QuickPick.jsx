@@ -30,7 +30,7 @@ const QuickPick = () => {
         className="bg-light text-dark py-2 px-4 rounded-lg mb-4 transition-transform duration-300 transform hover:scale-105"
         onClick={generateRandomNumbers}
       >
-        Generate Random Numbers
+        Generate
       </button>
       
       {combinations.length > 0 && (

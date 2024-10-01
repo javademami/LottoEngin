@@ -96,7 +96,7 @@ const LotteryResults = () => {
         onClick={fetchResults}
         disabled={loading}
       >
-        Refresh Results
+        Refresh
       </button>
     </div>
   );

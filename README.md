@@ -31,7 +31,7 @@ The LottoEngine is a comprehensive web application designed to provide users wit
 - Offers detailed information about the Swedish Lotto game.
 - Explains rules, draw schedules, and prize structures.
 
-  Demo: https://lotto-engin-66g45dpg0-javademamis-projects.vercel.app
+  Demo: https://lotto-engin.vercel.app
 
 ## Technology Stack
 - React.js for the frontend user interface

@@ -78,7 +78,7 @@ const CombinationGenerator = () => {
           className="bg-light text-dark py-2 px-4 rounded-lg mb-4 w-full transition-transform duration-300 transform hover:scale-105"
           onClick={generateRandomCombination}
         >
-          Generate Random Combination
+          Generate
         </button>
       </div>
 
