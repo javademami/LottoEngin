@@ -1,7 +1,7 @@
 const express = require('express');
+const cors = require('cors');
 const axios = require('axios');
 const cheerio = require('cheerio');
-const cors = require('cors');
 
 const app = express();
 
@@ -26,7 +26,7 @@ function getLastDrawDate() {
   return lastDrawDate.toISOString().split('T')[0];
 }
 
-app.get('/lotto-results', async (req, res) => {
+app.get('/api/lotto-results', async (req, res) => {
   try {
     const { data } = await axios.get('https://viking-lotto.net/en/sweden-lotto');
     const $ = cheerio.load(data);
@@ -58,13 +58,15 @@ app.get('/lotto-results', async (req, res) => {
       },
     });
   } catch (error) {
-    console.error(error);
+    console.error('Error fetching lottery results:', error);
     res.status(500).json({ error: 'خطا در دریافت اطلاعات' });
   }
 });
 
-app.get('/', (req, res) => {
-  res.send('Lottery API is running');
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
 
 module.exports = app;

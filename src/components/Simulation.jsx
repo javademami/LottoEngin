@@ -59,7 +59,7 @@ const Simulation = () => {
             key={number}
             className={`w-10 h-10 flex items-center justify-center border rounded-full cursor-pointer ${
               selectedNumbers.has(number) ? 'bg-blue-500 text-white' : 'bg-white text-black'
-            } ${selectedNumbers.size >= 7 ? 'pointer-events-none' : ''}`}
+            } ${selectedNumbers.size >= 7 && !selectedNumbers.has(number) ? 'pointer-events-none opacity-50' : ''}`}
             onClick={() => toggleNumber(number)}
           >
             {number}
@@ -80,7 +80,7 @@ const Simulation = () => {
     <div className="bg-primary p-6 rounded-lg shadow-lg flex flex-col items-center">
       <h2 className="text-2xl font-semibold mb-4 text-center text-white">Simulation</h2>
       <h3 className="text-lg mb-4 text-center text-white">Select up to 7 numbers:</h3>
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-md mx-auto">
         {renderNumberGrid()}
       </div>
       <div className="flex space-x-4 mt-4">
@@ -88,13 +88,13 @@ const Simulation = () => {
           className="bg-light text-dark py-2 px-4 rounded-lg transition-transform duration-300 transform hover:scale-105"
           onClick={simulateLottery}
         >
-          Simulate Lottery
+          Simulate
         </button>
         <button
           className="bg-red-500 text-white py-2 px-4 rounded-lg transition-transform duration-300 transform hover:scale-105"
           onClick={resetSelection}
         >
-          Reset Selection
+          Reset
         </button>
       </div>
       {result && (
@@ -112,7 +112,7 @@ const Simulation = () => {
             ))}
           </div>
           <h3 className="text-lg font-semibold mt-4 mb-2 text-center text-white">Matching numbers:</h3>
-          <div className="flex flex-wrap justify-center text-white">
+          <div className="flex flex-wrap justify-center">
             {matchingNumbers.map((num) => (
               <NumberCircle key={num} number={num} color="bg-yellow-500" />
             ))}

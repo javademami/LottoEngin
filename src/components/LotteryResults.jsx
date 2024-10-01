@@ -7,19 +7,19 @@ const LotteryResults = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const API_URL = process.env.REACT_APP_API_URL || '';
-
   const fetchResults = useCallback(async () => {
     setLoading(true);
     setError('');
     try {
-      const { data } = await axios.get(`${API_URL}/lotto-results`);
+      console.log('Fetching results...');
+      const { data } = await axios.get('/api/lotto-results');
+      console.log('Received data:', data);
       setResults(data.results);
       setDate(data.date);
     } catch (err) {
       console.error('Error fetching results:', err);
       if (err.response) {
-        setError(`خطا در دریافت اطلاعات: ${err.response.status} - ${err.response.data.error || err.response.statusText}`);
+        setError(`خطا در دریافت اطلاعات: ${err.response.status} - ${JSON.stringify(err.response.data)}`);
       } else if (err.request) {
         setError('خطا در ارتباط با سرور. لطفاً اتصال اینترنت خود را بررسی کنید.');
       } else {
@@ -28,7 +28,7 @@ const LotteryResults = () => {
     } finally {
       setLoading(false);
     }
-  }, [API_URL]);
+  }, []);
 
   useEffect(() => {
     fetchResults();
@@ -47,7 +47,7 @@ const LotteryResults = () => {
             </div>
           ))}
         </div>
-        {extraNumbers.length > 0 && (
+        {extraNumbers && extraNumbers.length > 0 && (
           <div className="flex justify-center gap-2">
             {extraNumbers.map((num, index) => (
               <div
@@ -72,7 +72,7 @@ const LotteryResults = () => {
 
       {results && (
         <div className="text-lg mt-4 w-full">
-          <h3 className="font-semibold text-center text-white">Results for : {date}</h3>
+          <h3 className="font-semibold text-center text-white">Results for: {date}</h3>
 
           <div className="mt-4">
             <h4 className="font-semibold text-center text-white">Lotto 1:</h4>
@@ -86,7 +86,7 @@ const LotteryResults = () => {
 
           <div className="mt-4">
             <h4 className="font-semibold text-center text-white">Joker:</h4>
-            {renderNumbers(results.joker, [], true)} 
+            {renderNumbers(results.joker, [], true)}
           </div>
         </div>
       )}

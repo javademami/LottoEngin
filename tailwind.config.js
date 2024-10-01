@@ -1,11 +1,15 @@
-module.exports = {
-  content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    './index.html',
+    './src/**/*.{js,jsx,ts,tsx}',
+  ],
   theme: {
     extend: {
       colors: {
-        primary: '#003800',   // رنگ اصلی اپلیکیشن (نارنجی ملایم)
-        dark: '#121212',      // رنگ پس‌زمینه برای حالت تاریک (خاکستری روشن)
-        light: '#e4e5f1',      // رنگ پس‌زمینه برای حالت روشن (سفید خالص)
+        primary: '#003800',
+        dark: '#121212',
+        light: '#e4e5f1',
       },
       fontFamily: {
         sans: ['Poppins', 'sans-serif'],
@@ -14,4 +18,4 @@ module.exports = {
     },
   },
   plugins: [],
-};
+}
